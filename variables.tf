@@ -5,12 +5,14 @@ variable "aws_configs" {
   })
 }
 
-variable "ec2_configs" {
-  type = object({
+variable "ec2" {
+  type = list(object({
     name                        = string
-    ami                         = string
-    key_name                    = string
-    instance_type               = string
-    associate_public_ip_address = bool
-  })
+    ami                         = optional(string, null)
+    instance_type               = optional(string, "t2.micro")
+    key_name                    = optional(string, null)
+    user_data                   = optional(string, null)
+    security_group_ids          = optional(list(string), null)
+    associate_public_ip_address = optional(bool, false)
+  }))
 }
